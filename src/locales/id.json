@@ -1,0 +1,380 @@
+{
+  "common": {
+    "loading": "Memuat...",
+    "error": "Terjadi kesalahan",
+    "success": "Berhasil",
+    "save": "Simpan",
+    "cancel": "Batal",
+    "delete": "Hapus",
+    "edit": "Edit",
+    "add": "Tambah",
+    "search": "Cari",
+    "filter": "Filter",
+    "export": "Ekspor",
+    "import": "Impor",
+    "refresh": "Muat Ulang",
+    "view": "Lihat",
+    "close": "Tutup",
+    "confirm": "Konfirmasi",
+    "yes": "Ya",
+    "no": "Tidak",
+    "back": "Kembali",
+    "next": "Selanjutnya",
+    "previous": "Sebelumnya",
+    "settings": "Pengaturan",
+    "logout": "Keluar"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "sales": "Penjualan",
+    "products": "Produk",
+    "customers": "Pelanggan",
+    "reports": "Laporan",
+    "analytics": "Analitik",
+    "advertising": "Iklan",
+    "forecasting": "Peramalan",
+    "cashflow": "Arus Kas",
+    "inventory": "Inventori",
+    "settings": "Pengaturan",
+    "users": "Pengguna"
+  },
+  "dashboard": {
+    "title": "Dashboard D'Busana",
+    "welcome": "Selamat datang di dashboard bisnis fashion D'Busana",
+    "overview": "Ringkasan Bisnis",
+    "kpi": {
+      "total_revenue": "Total Pendapatan",
+      "total_orders": "Total Pesanan",
+      "total_products": "Total Produk",
+      "total_customers": "Total Pelanggan",
+      "growth_rate": "Tingkat Pertumbuhan",
+      "profit_margin": "Margin Keuntungan",
+      "conversion_rate": "Tingkat Konversi",
+      "avg_order_value": "Nilai Rata-rata Pesanan"
+    },
+    "charts": {
+      "revenue_trend": "Tren Pendapatan",
+      "sales_performance": "Performa Penjualan",
+      "marketplace_breakdown": "Breakdown Marketplace",
+      "product_performance": "Performa Produk"
+    },
+    "recent_activities": "Aktivitas Terbaru",
+    "quick_actions": "Aksi Cepat"
+  },
+  "sales": {
+    "title": "Manajemen Penjualan",
+    "overview": "Ringkasan Penjualan",
+    "transactions": "Transaksi",
+    "revenue": "Pendapatan",
+    "orders": "Pesanan",
+    "customers": "Pelanggan",
+    "marketplace": {
+      "shopee": "Shopee",
+      "tokopedia": "Tokopedia",
+      "lazada": "Lazada",
+      "tiktok_shop": "TikTok Shop",
+      "direct": "Penjualan Langsung"
+    },
+    "status": {
+      "pending": "Menunggu",
+      "processing": "Diproses",
+      "shipped": "Dikirim",
+      "delivered": "Terkirim",
+      "cancelled": "Dibatalkan",
+      "returned": "Dikembalikan"
+    },
+    "filters": {
+      "date_range": "Rentang Tanggal",
+      "marketplace": "Marketplace",
+      "status": "Status",
+      "product": "Produk",
+      "customer": "Pelanggan"
+    }
+  },
+  "products": {
+    "title": "Manajemen Produk",
+    "overview": "Ringkasan Produk",
+    "inventory": "Inventori",
+    "categories": "Kategori",
+    "brands": "Merek",
+    "stock": "Stok",
+    "price": "Harga",
+    "cost": "Biaya",
+    "profit": "Keuntungan",
+    "performance": "Performa Produk",
+    "fields": {
+      "name": "Nama Produk",
+      "sku": "SKU",
+      "category": "Kategori",
+      "brand": "Merek",
+      "price": "Harga",
+      "cost": "HPP",
+      "stock": "Stok",
+      "description": "Deskripsi",
+      "images": "Gambar"
+    }
+  },
+  "customers": {
+    "title": "Manajemen Pelanggan",
+    "overview": "Ringkasan Pelanggan",
+    "segments": "Segmentasi Pelanggan",
+    "lifetime_value": "Nilai Seumur Hidup",
+    "acquisition": "Akuisisi Pelanggan",
+    "retention": "Retensi Pelanggan",
+    "fields": {
+      "name": "Nama",
+      "email": "Email",
+      "phone": "Telepon",
+      "address": "Alamat",
+      "city": "Kota",
+      "province": "Provinsi",
+      "total_orders": "Total Pesanan",
+      "total_spent": "Total Belanja",
+      "last_order": "Pesanan Terakhir"
+    }
+  },
+  "analytics": {
+    "title": "Analitik Bisnis",
+    "strategic": "Analitik Strategis",
+    "performance": "Analisa Performa",
+    "trends": "Tren Bisnis",
+    "insights": "Wawasan Bisnis",
+    "recommendations": "Rekomendasi",
+    "forecasting": "Peramalan",
+    "roi": "Return on Investment",
+    "conversion": {
+      "title": "Tingkat Konversi per Channel",
+      "insight": "{{channel}} memiliki conversion rate tertinggi ({{rate}}%), menunjukkan potensi besar untuk ekspansi investasi di channel ini.",
+      "single_channel": "Saat ini hanya beroperasi di {{channel}} dengan conversion rate {{rate}}%. Pertimbangkan ekspansi ke marketplace lain untuk diversifikasi risiko.",
+      "no_data": "Tidak ada data conversion rates tersedia",
+      "no_data_description": "Data akan muncul setelah ada transaksi penjualan"
+    },
+    "strategic": {
+      "title": "Analitik Bisnis Strategis",
+      "description": "Analisis data komprehensif dan wawasan strategis untuk pengambilan keputusan bisnis D'Busana",
+      "business_health_score": "Skor Kesehatan Bisnis",
+      "analysis_period": "Periode Analisis",
+      "months_3": "3 Bulan",
+      "months_6": "6 Bulan",
+      "year_1": "1 Tahun",
+      "export_report": "Ekspor Laporan",
+      "analytics_view": "Tampilan Analitik",
+      "strategic_analytics": "Analitik Strategis",
+      "ai_powered_insights": "Wawasan Bertenaga AI",
+      "method_comparison": "Perbandingan Metode",
+      "analyzing": "Menganalisis...",
+      "refresh_ai": "Perbarui AI",
+      "last_refresh": "Terakhir",
+      "loading_text": "Memuat Analitik Strategis...",
+      "loading_description": "Menganalisis data bisnis komprehensif",
+      "failed_title": "Gagal Memuat Data Strategis",
+      "failed_description": "Tidak dapat menghasilkan analitik bisnis strategis",
+      "retry_loading": "Coba Muat Ulang",
+      "kpi": {
+        "total_revenue": "Total Pendapatan",
+        "net_profit": "Keuntungan Bersih",
+        "marketing_roi": "ROI Marketing",
+        "customer_ltv": "LTV Pelanggan",
+        "growth": "pertumbuhan",
+        "margin": "margin",
+        "excellent_performance": "Performa Sangat Baik",
+        "vs_cac": "vs {{cac}} CAC"
+      },
+      "tabs": {
+        "business_overview": "Ringkasan Bisnis",
+        "strategic_insights": "Wawasan Strategis",
+        "recommendations": "Rekomendasi",
+        "performance_analysis": "Analisis Performa",
+        "strategic_forecasting": "Peramalan Strategis"
+      },
+      "charts": {
+        "business_performance_matrix": "Matriks Performa Bisnis",
+        "revenue_distribution": "Distribusi Pendapatan per Channel",
+        "revenue_growth_trend": "Tren Pertumbuhan Pendapatan & Pola Musiman",
+        "performance_score": "Skor Performa",
+        "revenue_share": "Bagian Pendapatan",
+        "revenue": "Pendapatan",
+        "month": "Bulan"
+      },
+      "metrics": {
+        "operational_excellence": "Keunggulan Operasional",
+        "marketing_performance": "Performa Marketing",
+        "risk_assessment": "Penilaian Risiko",
+        "inventory_turnover": "Perputaran Inventori",
+        "order_fulfillment": "Pemenuhan Pesanan",
+        "cash_flow_health": "Kesehatan Arus Kas",
+        "campaign_effectiveness": "Efektivitas Kampanye",
+        "best_conversion_rate": "Tingkat Konversi Terbaik",
+        "ltv_cac_ratio": "Rasio LTV/CAC",
+        "cash_flow_risk": "Risiko Arus Kas",
+        "inventory_risk": "Risiko Inventori",
+        "market_risk": "Risiko Pasar",
+        "operational_risk": "Risiko Operasional",
+        "overall_risk_level": "Tingkat Risiko Keseluruhan"
+      },
+      "insights": {
+        "title": "Wawasan Bisnis Strategis",
+        "description": "Wawasan berbasis data untuk pengambilan keputusan strategis",
+        "filter_placeholder": "Filter berdasarkan kategori",
+        "all_categories": "Semua Kategori",
+        "growth_opportunities": "Peluang Pertumbuhan",
+        "risk_management": "Manajemen Risiko",
+        "optimization": "Optimalisasi",
+        "growth_strategy": "Strategi Pertumbuhan",
+        "priority": "PRIORITAS",
+        "impact_score": "Skor Dampak",
+        "timeline": "Timeline",
+        "implementation": "Implementasi",
+        "expected_outcome": "Hasil yang Diharapkan",
+        "action_items": "Item Tindakan",
+        "kpi_impact": "Dampak KPI",
+        "effort": "upaya"
+      },
+      "recommendations": {
+        "title": "Rekomendasi Bisnis Strategis",
+        "description": "Rekomendasi investasi diprioritaskan berdasarkan dampak bisnis",
+        "business_impact": "Dampak Bisnis",
+        "investment_required": "Investasi Diperlukan",
+        "payback_period": "Periode Pengembalian",
+        "risk_level": "Tingkat Risiko",
+        "implementation_steps": "Langkah-langkah Implementasi",
+        "success_metrics": "Metrik Keberhasilan",
+        "no_steps": "Tidak ada langkah implementasi tersedia",
+        "no_metrics": "Tidak ada metrik keberhasilan yang ditentukan",
+        "no_recommendations_title": "Tidak Ada Rekomendasi Bisnis Tersedia",
+        "no_recommendations_description": "Rekomendasi strategis akan muncul di sini setelah data yang cukup dianalisis.",
+        "risk": {
+          "low": "RENDAH",
+          "medium": "SEDANG",
+          "high": "TINGGI"
+        }
+      },
+      "performance": {
+        "customer_segments": "Performa Segmen Pelanggan",
+        "segment_size": "Ukuran Segmen",
+        "lifetime_value": "Nilai Seumur Hidup",
+        "acquisition_cost": "Biaya Akuisisi",
+        "cost_structure": "Struktur Biaya",
+        "marketplace_conversion": "Konversi Marketplace",
+        "conversion_rate": "Tingkat Konversi",
+        "orders": "pesanan"
+      },
+      "toast": {
+        "success_loaded": "Analitik Bisnis Strategis telah dimuat",
+        "success_description": "{{insights}} wawasan bertenaga AI dan {{recommendations}} rekomendasi berdasarkan analisis data real",
+        "ai_success": "Analitik Strategis AI Dimuat",
+        "ai_description": "{{count}} wawasan cerdas dihasilkan dari data bisnis real",
+        "fallback_info": "Menggunakan wawasan cadangan - analisis strategis siap",
+        "error_engine": "Kesalahan mesin analitik - menampilkan wawasan cadangan",
+        "unavailable": "Analitik Strategis Tidak Tersedia",
+        "unavailable_description": "Tidak dapat menganalisis data - database tidak tersedia",
+        "comparison_success": "Analitik Perbandingan Dihasilkan",
+        "comparison_description": "Perbandingan wawasan Template vs AI vs Hybrid siap"
+      },
+      "categories": {
+        "opportunity": "Peluang",
+        "risk": "Risiko",
+        "optimization": "Optimalisasi",
+        "growth": "Pertumbuhan"
+      }
+    }
+  },
+  "advertising": {
+    "title": "Manajemen Iklan",
+    "campaigns": "Kampanye",
+    "performance": "Performa Iklan",
+    "spend": "Pengeluaran Iklan",
+    "roi": "ROI Iklan",
+    "impressions": "Tayangan",
+    "clicks": "Klik",
+    "conversions": "Konversi",
+    "cost_per_click": "Biaya per Klik",
+    "cost_per_acquisition": "Biaya per Akuisisi"
+  },
+  "reports": {
+    "title": "Laporan",
+    "financial": "Laporan Keuangan",
+    "sales": "Laporan Penjualan",
+    "inventory": "Laporan Inventori",
+    "customer": "Laporan Pelanggan",
+    "marketing": "Laporan Marketing",
+    "operational": "Laporan Operasional"
+  },
+  "settings": {
+    "title": "Pengaturan",
+    "general": "Umum",
+    "account": "Akun",
+    "security": "Keamanan",
+    "notifications": "Notifikasi",
+    "language": "Bahasa",
+    "theme": "Tema",
+    "currency": "Mata Uang",
+    "timezone": "Zona Waktu"
+  },
+  "import": {
+    "title": "Import Data",
+    "sales_data": "Data Penjualan",
+    "product_data": "Data Produk",
+    "customer_data": "Data Pelanggan",
+    "advertising_data": "Data Iklan",
+    "template": "Template",
+    "upload": "Unggah File",
+    "processing": "Memproses...",
+    "success": "Import berhasil",
+    "error": "Import gagal",
+    "validation": {
+      "required_fields": "Field wajib tidak boleh kosong",
+      "invalid_format": "Format tidak valid",
+      "duplicate_data": "Data duplikat terdeteksi"
+    }
+  },
+  "errors": {
+    "network": "Koneksi jaringan bermasalah",
+    "server": "Server error",
+    "not_found": "Data tidak ditemukan",
+    "unauthorized": "Tidak diizinkan",
+    "validation": "Validasi gagal",
+    "unknown": "Kesalahan tidak diketahui"
+  },
+  "success": {
+    "save": "Data berhasil disimpan",
+    "update": "Data berhasil diperbarui",
+    "delete": "Data berhasil dihapus",
+    "import": "Data berhasil diimpor",
+    "export": "Data berhasil diekspor"
+  },
+  "date": {
+    "today": "Hari ini",
+    "yesterday": "Kemarin",
+    "this_week": "Minggu ini",
+    "last_week": "Minggu lalu",
+    "this_month": "Bulan ini",
+    "last_month": "Bulan lalu",
+    "this_year": "Tahun ini",
+    "last_year": "Tahun lalu",
+    "custom": "Kustom",
+    "months": {
+      "january": "Januari",
+      "february": "Februari",
+      "march": "Maret",
+      "april": "April",
+      "may": "Mei",
+      "june": "Juni",
+      "july": "Juli",
+      "august": "Agustus",
+      "september": "September",
+      "october": "Oktober",
+      "november": "November",
+      "december": "Desember"
+    },
+    "days": {
+      "sunday": "Minggu",
+      "monday": "Senin",
+      "tuesday": "Selasa",
+      "wednesday": "Rabu",
+      "thursday": "Kamis",
+      "friday": "Jumat",
+      "saturday": "Sabtu"
+    }
+  }
+}

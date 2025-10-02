@@ -1,0 +1,1006 @@
+// Prisma Schema for D'Busana Fashion Dashboard
+// Updated to match frontend ImportDataContext interfaces
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Sales data model - matches ImportedSalesData interface
+model SalesData {
+  id                String    @id @default(cuid())
+  order_id          String
+  seller_sku        String
+  product_name      String
+  color             String
+  size              String
+  quantity          Int
+  order_amount      Float
+  created_time      DateTime
+  delivered_time    DateTime?
+  settlement_amount Float?
+  total_revenue     Float?
+  hpp               Float?    // Harga Pokok Penjualan
+  total             Float?
+  marketplace       String?   // Asal marketplace (TikTok Shop, Shopee, dll)
+  customer          String?   // Customer name or identifier
+  province          String?   // Province/provinsi location
+  regency_city      String?   // Combined regency and city location
+  
+  // Relations
+  import_batch      ImportBatch? @relation("SalesImportBatch", fields: [import_batch_id], references: [id])
+  import_batch_id   String?
+  
+  // Metadata
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
+  
+  // Index for performance
+  @@index([order_id])
+  @@index([seller_sku])
+  @@index([created_time])
+  @@index([delivered_time])
+  @@index([marketplace])
+  @@index([customer])
+  @@index([province])
+  @@index([regency_city])
+  @@unique([order_id, seller_sku, color, size]) // Prevent duplicates as per validation rules
+  @@map("sales_data")
+}
+
+// Product data model - matches ImportedProductData interface
+model ProductData {
+  id              String    @id @default(cuid())
+  product_code    String    @unique
+  product_name    String
+  category        String
+  brand           String
+  size            String
+  color           String
+  price           Float
+  cost            Float
+  stock_quantity  Int
+  min_stock       Int
+  description     String?
+  
+  // Relations
+  stock_movements StockData[]
+  import_batch    ImportBatch? @relation("ProductImportBatch", fields: [import_batch_id], references: [id])
+  import_batch_id String?
+  
+  // Metadata
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+  
+  // Index for performance
+  @@index([category])
+  @@index([brand])
+  @@index([stock_quantity])
+  @@map("product_data")
+}
+
+// Stock movement data model - matches ImportedStockData interface
+model StockData {
+  id               String          @id @default(cuid())
+  product_code     String
+  movement_type    StockMovementType
+  quantity         Int
+  reference_number String?
+  notes            String?
+  movement_date    DateTime
+  
+  // Relations
+  product          ProductData?    @relation(fields: [product_code], references: [product_code])
+  import_batch     ImportBatch?    @relation("StockImportBatch", fields: [import_batch_id], references: [id])
+  import_batch_id  String?
+  
+  // Metadata
+  created_at       DateTime        @default(now())
+  updated_at       DateTime        @updatedAt
+  
+  // Index for performance
+  @@index([product_code])
+  @@index([movement_date])
+  @@index([movement_type])
+  @@map("stock_data")
+}
+
+// Enum for stock movement types
+enum StockMovementType {
+  in
+  out
+  adjustment
+}
+
+// Import batch tracking
+model ImportBatch {
+  id              String    @id @default(cuid())
+  batch_name      String
+  import_type     ImportType
+  file_name       String
+  file_type       String    // 'excel' or 'csv'
+  total_records   Int
+  valid_records   Int
+  invalid_records Int
+  imported_records Int
+  status          ImportStatus
+  error_details   Json?     // Store validation errors
+  
+  // Relations
+  sales_data      SalesData[]      @relation("SalesImportBatch")
+  product_data    ProductData[]    @relation("ProductImportBatch")
+  stock_data      StockData[]      @relation("StockImportBatch")
+  advertising_data AdvertisingData[] @relation("AdvertisingImportBatch")
+  advertising_settlement AdvertisingSettlement[] @relation("AdvertisingSettlementImportBatch")
+  returns_and_cancellations ReturnsAndCancellations[] @relation("ReturnsImportBatch")
+  marketplace_reimbursements MarketplaceReimbursement[] @relation("ReimbursementImportBatch")
+  commission_adjustments CommissionAdjustments[] @relation("CommissionAdjustmentImportBatch")
+  affiliate_samples AffiliateSamples[] @relation("AffiliateSampleImportBatch")
+  
+  // Metadata
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+  
+  @@map("import_batches")
+}
+
+// Advertising/Marketing data model - Updated to match Excel format
+model AdvertisingData {
+  id                String    @id @default(cuid())
+  campaign_name     String
+  ad_creative_type  String?   // Creative type (Video, Image, Carousel, etc.) - replaces campaign_type
+  ad_creative       String?
+  account_name      String?
+  cost              Float     @default(0)
+  conversions       Int       @default(0)
+  cpa               Float?    // Cost Per Acquisition
+  revenue           Float     @default(0)
+  roi               Float?    // Return on Investment
+  impressions       Int       @default(0)
+  clicks            Int       @default(0)
+  ctr               Float?    // Click Through Rate
+  conversion_rate   Float?    // Conversion Rate
+  date_start        DateTime  // Start date from Excel
+  date_end          DateTime  // End date from Excel
+  marketplace       String?   // Target marketplace (TikTok Shop, Shopee, dll)
+  nama_produk       String?   // Product name being advertised (for True Profit ROI calculation)
+  
+  // Relations
+  import_batch      ImportBatch? @relation("AdvertisingImportBatch", fields: [import_batch_id], references: [id])
+  import_batch_id   String?
+  
+  // Metadata
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
+  
+  // Index for performance
+  @@index([campaign_name])
+  @@index([ad_creative_type])
+  @@index([account_name])
+  @@index([date_start])
+  @@index([date_end])
+  @@index([marketplace])
+  @@index([nama_produk])
+  @@index([cost])
+  @@index([revenue])
+  @@index([roi])
+  @@map("advertising_data")
+}
+
+// 🏦 ADVERTISING SETTLEMENT DATA - Biaya pengeluaran iklan dengan pajak
+model AdvertisingSettlement {
+  order_id              String    @id  // Order ID dari platform advertising sebagai primary key
+  type                  String?   // Type of settlement (e.g., "Ad Spend", "Tax", "Fee")
+  order_created_time    DateTime  // Waktu order dibuat
+  order_settled_time    DateTime  // Waktu settlement/pembayaran
+  settlement_amount     Float     @default(0) // Total settlement amount (biaya + pajak)
+  settlement_period     String?   // Period of settlement (YYYY-MM format for period-aware duplicate detection)
+  
+  // Optional fields for better categorization
+  account_name          String?   // Account advertising yang digunakan
+  marketplace           String?   // Platform (TikTok Ads, Facebook Ads, dll)
+  currency              String?   @default("IDR") // Currency type
+  
+  // Relations
+  import_batch          ImportBatch? @relation("AdvertisingSettlementImportBatch", fields: [import_batch_id], references: [id])
+  import_batch_id       String?
+  
+  // Metadata
+  created_at            DateTime  @default(now())
+  updated_at            DateTime  @updatedAt
+  
+  // Index for performance (order_id tidak perlu diindex karena sudah primary key)
+  @@index([type])
+  @@index([account_name])
+  @@index([order_created_time])
+  @@index([order_settled_time])
+  @@index([marketplace])
+  @@index([settlement_amount])
+  @@index([settlement_period])
+  @@map("advertising_settlement")
+}
+
+// Note: Removed CampaignType and Platform enums as they are replaced with flexible string fields
+// ad_creative_type and account_name to accommodate various Excel formats
+
+// Enums for import tracking
+enum ImportType {
+  sales
+  products
+  stock
+  advertising
+  advertising_settlement
+  ADVERTISING_SETTLEMENT
+  returns_and_cancellations
+  marketplace_reimbursements
+  commission_adjustments
+  affiliate_samples
+}
+
+enum ImportStatus {
+  pending
+  processing
+  completed
+  failed
+  partial
+}
+
+// 🔄 RETURNS & CANCELLATIONS - Tracking penjualan yang dikembalikan/dibatalkan
+model ReturnsAndCancellations {
+  id                    String    @id @default(cuid())
+  
+  // Reference ke sales asli
+  original_order_id     String?   // ID order asli dari marketplace
+  original_sales_id     String?   // Reference ke SalesData jika ada
+  
+  // Detail return/cancel
+  type                  String    // "return" atau "cancel"
+  reason                String?   // Alasan return/cancel
+  return_date           DateTime  // Tanggal return/cancel
+  
+  // Financial impact
+  returned_amount       Float     @default(0) // Jumlah yang dikembalikan ke customer
+  refund_amount         Float     @default(0) // Actual refund amount (bisa beda dari returned_amount)
+  restocking_fee        Float     @default(0) // Fee restocking jika ada
+  shipping_cost_loss    Float     @default(0) // Biaya shipping yang tidak bisa diklaim
+  
+  // Product details
+  product_name          String
+  quantity_returned     Int       @default(1)
+  original_price        Float     @default(0)
+  marketplace           String?   // Platform tempat terjadi return
+  
+  // Status & condition
+  product_condition     String?   // "new", "used", "damaged"
+  resellable            Boolean   @default(false) // Apakah bisa dijual lagi
+  
+  // Relations
+  import_batch          ImportBatch? @relation("ReturnsImportBatch", fields: [import_batch_id], references: [id])
+  import_batch_id       String?
+  
+  // Metadata
+  created_at            DateTime  @default(now())
+  updated_at            DateTime  @updatedAt
+  
+  @@index([type])
+  @@index([return_date])
+  @@index([marketplace])
+  @@index([product_name])
+  @@index([resellable])
+  @@map("returns_and_cancellations")
+}
+
+// 💰 MARKETPLACE REIMBURSEMENT - Dana kompensasi dari marketplace
+model MarketplaceReimbursement {
+  id                    String    @id @default(cuid())
+  
+  // Reimbursement details
+  claim_id              String?   // ID klaim dari marketplace
+  reimbursement_type    String    // "lost_package", "fake_checkout", "platform_error", "damage_in_transit"
+  
+  // Financial details
+  claim_amount          Float     @default(0) // Jumlah yang diklaim
+  approved_amount       Float     @default(0) // Jumlah yang disetujui
+  received_amount       Float     @default(0) // Jumlah yang diterima
+  processing_fee        Float     @default(0) // Fee processing jika ada
+  
+  // Dates
+  incident_date         DateTime  // Tanggal kejadian
+  claim_date            DateTime  // Tanggal pengajuan klaim
+  approval_date         DateTime? // Tanggal persetujuan
+  received_date         DateTime? // Tanggal penerimaan dana
+  
+  // Product & order details
+  affected_order_id     String?   // ID order yang terdampak
+  product_name          String?
+  marketplace           String    // Platform yang memberikan reimbursement
+  
+  // Status
+  status                String    @default("pending") // "pending", "approved", "rejected", "received"
+  
+  // Documentation
+  notes                 String?   // Catatan tambahan
+  evidence_provided     String?   // Bukti yang diberikan
+  
+  // Relations
+  import_batch          ImportBatch? @relation("ReimbursementImportBatch", fields: [import_batch_id], references: [id])
+  import_batch_id       String?
+  
+  // Metadata
+  created_at            DateTime  @default(now())
+  updated_at            DateTime  @updatedAt
+  
+  @@index([reimbursement_type])
+  @@index([status])
+  @@index([marketplace])
+  @@index([incident_date])
+  @@index([claim_date])
+  @@map("marketplace_reimbursements")
+}
+
+// 📉 COMMISSION ADJUSTMENTS - Penyesuaian komisi untuk retur TikTok dll
+model CommissionAdjustments {
+  id                    String    @id @default(cuid())
+  
+  // Reference ke transaksi asli
+  original_order_id     String?   // ID order asli
+  original_sales_id     String?   // Reference ke SalesData
+  
+  // Adjustment details
+  adjustment_type       String    // "return_commission_loss", "dynamic_commission", "platform_penalty"
+  reason                String?   // Penjelasan adjustment
+  
+  // Financial impact
+  original_commission   Float     @default(0) // Komisi asli yang didapat
+  adjustment_amount     Float     @default(0) // Jumlah adjustment (bisa negatif)
+  final_commission      Float     @default(0) // Komisi final setelah adjustment
+  
+  // Platform specific
+  marketplace           String    // Platform tempat terjadi adjustment
+  commission_rate       Float?    // Rate komisi yang berlaku
+  dynamic_rate_applied  Boolean   @default(false) // Apakah menggunakan dynamic rate
+  
+  // Dates
+  transaction_date      DateTime  // Tanggal transaksi asli
+  adjustment_date       DateTime  // Tanggal adjustment diterapkan
+  
+  // Product details
+  product_name          String?
+  quantity              Int       @default(1)
+  product_price         Float     @default(0)
+  
+  // Relations
+  import_batch          ImportBatch? @relation("CommissionAdjustmentImportBatch", fields: [import_batch_id], references: [id])
+  import_batch_id       String?
+  
+  // Metadata
+  created_at            DateTime  @default(now())
+  updated_at            DateTime  @updatedAt
+  
+  @@index([adjustment_type])
+  @@index([marketplace])
+  @@index([transaction_date])
+  @@index([adjustment_date])
+  @@index([dynamic_rate_applied])
+  @@map("commission_adjustments")
+}
+
+// 🎁 AFFILIATE SAMPLES - Produk yang diberikan ke affiliate untuk promosi
+model AffiliateSamples {
+  id                    String    @id @default(cuid())
+  
+  // Affiliate details
+  affiliate_name        String    // Nama affiliate/influencer
+  affiliate_platform   String?   // Platform affiliate (Instagram, TikTok, YouTube)
+  affiliate_contact     String?   // Kontak affiliate
+  
+  // Sample details
+  product_name          String    // Nama produk yang diberikan
+  product_sku           String?   // SKU produk
+  quantity_given        Int       @default(1) // Jumlah yang diberikan
+  
+  // Cost calculation
+  product_cost          Float     @default(0) // HPP produk
+  total_cost            Float     @default(0) // Total biaya (HPP × quantity)
+  shipping_cost         Float     @default(0) // Biaya shipping ke affiliate
+  packaging_cost        Float     @default(0) // Biaya packaging khusus
+  
+  // Campaign & tracking
+  campaign_name         String?   // Nama campaign/kolaborasi
+  expected_reach        Int?      // Expected audience reach
+  content_type          String?   // "post", "story", "video", "review"
+  
+  // Dates
+  given_date            DateTime  // Tanggal pemberian sample
+  expected_content_date DateTime? // Expected tanggal konten dipublish
+  actual_content_date   DateTime? // Actual tanggal konten dipublish
+  
+  // Performance tracking
+  content_delivered     Boolean   @default(false) // Apakah konten sudah dibuat
+  performance_notes     String?   // Catatan performa campaign
+  roi_estimate          Float?    // Estimasi ROI dari sample ini
+  
+  // Sample status
+  status                String    @default("sent") // "planned", "sent", "delivered", "content_created", "completed"
+  
+  // Relations
+  import_batch          ImportBatch? @relation("AffiliateSampleImportBatch", fields: [import_batch_id], references: [id])
+  import_batch_id       String?
+  
+  // Metadata
+  created_at            DateTime  @default(now())
+  updated_at            DateTime  @updatedAt
+  
+  @@index([affiliate_name])
+  @@index([affiliate_platform])
+  @@index([product_name])
+  @@index([given_date])
+  @@index([status])
+  @@index([content_delivered])
+  @@index([campaign_name])
+  @@map("affiliate_samples")
+}
+
+// Category model for organizing products
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  description String?
+  color       String?   // Hex color code for visual identification
+  
+  // Metadata
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  
+  @@map("categories")
+}
+
+// Brand model for organizing products
+model Brand {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  description String?
+  website     String?
+  logo_color  String?   // Hex color code for brand color
+  is_premium  Boolean   @default(false)
+  
+  // Metadata
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  
+  @@map("brands")
+}
+
+// Note: Using existing ProductData model for products instead of creating new Product model
+// This ensures backward compatibility with existing database structure
+
+// BOM models removed - no longer needed
+
+// Supplier model for procurement management
+model Supplier {
+  id              String    @id @default(cuid())
+  code            String    @unique
+  name            String
+  contact_person  String
+  phone           String
+  email           String
+  address         String
+  category        String    // fabric, accessories, trims, packaging
+  rating          Float     @default(0)
+  status          SupplierStatus @default(active)
+  payment_terms   String    // NET 7, NET 14, NET 30, COD
+  
+  // Relations
+  purchase_orders PurchaseOrder[]
+  
+  // Metadata
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+  
+  // Index for performance
+  @@index([category])
+  @@index([status])
+  @@index([name])
+  @@map("suppliers")
+}
+
+// Purchase Order model for procurement management
+model PurchaseOrder {
+  id              String    @id @default(cuid())
+  po_number       String    @unique
+  supplier_id     String
+  po_date         DateTime
+  expected_date   DateTime
+  delivery_date   DateTime?
+  status          POStatus  @default(draft)
+  total_amount    Float     @default(0)
+  items_count     Int       @default(0)
+  notes           String?
+  created_by      String?
+  
+  // Relations
+  supplier        Supplier  @relation(fields: [supplier_id], references: [id])
+  items           PurchaseOrderItem[]
+  
+  // Metadata
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+  
+  // Index for performance
+  @@index([supplier_id])
+  @@index([status])
+  @@index([po_date])
+  @@index([expected_date])
+  @@map("purchase_orders")
+}
+
+// Purchase Order Item model
+model PurchaseOrderItem {
+  id                  String    @id @default(cuid())
+  purchase_order_id   String
+  material_id         String    // Reference to material - no FK constraint since Material model removed
+  material_name       String?   // Store material name directly
+  material_description String?  // Store material description directly
+  quantity            Float
+  unit_price          Float
+  total_price         Float
+  received_quantity   Float?    @default(0)
+  unit                String
+  notes               String?
+  
+  // Relations
+  purchase_order      PurchaseOrder @relation(fields: [purchase_order_id], references: [id], onDelete: Cascade)
+  
+  // Metadata
+  created_at          DateTime  @default(now())
+  updated_at          DateTime  @updatedAt
+  
+  // Index for performance
+  @@index([purchase_order_id])
+  @@index([material_id])
+  @@index([material_name])
+  @@unique([purchase_order_id, material_id]) // Prevent duplicate materials in same PO
+  @@map("purchase_order_items")
+}
+
+// Enum for Supplier status
+enum SupplierStatus {
+  active
+  inactive
+  pending
+}
+
+// Enum for Purchase Order status
+enum POStatus {
+  draft
+  sent
+  confirmed
+  partial
+  delivered
+  cancelled
+}
+
+// Cash Flow Income and Expense tracking
+model CashFlowEntry {
+  id             String        @id @default(cuid())
+  entry_date     DateTime
+  description    String
+  category       String
+  entry_type     CashFlowType  // 'income' or 'expense'
+  amount         Float
+  source         String
+  marketplace    String?
+  reference      String?
+  notes          String?
+  created_by     String?
+  
+  // Metadata
+  created_at     DateTime      @default(now())
+  updated_at     DateTime      @updatedAt
+  
+  // Index for performance
+  @@index([entry_date])
+  @@index([entry_type])
+  @@index([category])
+  @@index([source])
+  @@map("cash_flow_entries")
+}
+
+// Enum for cash flow entry types
+enum CashFlowType {
+  income
+  expense
+}
+
+// Dashboard metrics cache for performance
+model DashboardMetrics {
+  id                    String    @id @default(cuid())
+  metric_date           DateTime  @unique
+  distinct_orders       Int
+  total_quantity_sold   Int
+  total_revenue         Float
+  total_profit          Float
+  total_hpp             Float
+  profit_margin         Float
+  average_order_value   Float
+  total_sales_records   Int
+  
+  // Secondary metrics
+  today_revenue         Float
+  today_orders          Int
+  month_revenue         Float
+  month_orders          Int
+  
+  // Product metrics
+  total_products        Int
+  low_stock_products    Int
+  out_of_stock_products Int
+  total_categories      Int
+  total_brands          Int
+  
+  // Metadata
+  calculated_at         DateTime  @default(now())
+  
+  @@map("dashboard_metrics")
+}
+
+// Import History model for comprehensive import tracking
+model ImportHistory {
+  id                String          @id @default(cuid())
+  timestamp         DateTime        @default(now())
+  user_id           String?
+  import_type       String          // 'sales', 'products', 'stock', 'advertising'
+  file_name         String?
+  file_size         Int?
+  file_hash         String?         // SHA-256 hash for duplicate detection
+  total_records     Int
+  imported_records  Int
+  failed_records    Int             @default(0)
+  duplicate_records Int             @default(0)
+  success_rate      Float?          // Calculated percentage
+  processing_time_ms Int?
+  import_status     ImportHistoryStatus @default(completed)
+  error_details     String?
+  import_summary    Json?           // Flexible metadata storage
+  metadata          Json?           // Extended metadata including date ranges
+  source_ip         String?
+  
+  // Relations
+  importMetadata    ImportMetadata[]
+  
+  // Metadata
+  created_at        DateTime        @default(now())
+  updated_at        DateTime        @updatedAt
+  
+  // Index for performance
+  @@index([timestamp])
+  @@index([import_type])
+  @@index([user_id])
+  @@index([import_status])
+  @@index([file_hash])
+  @@map("import_history")
+}
+
+// Enum for import history status
+enum ImportHistoryStatus {
+  pending
+  processing
+  completed
+  failed
+  partial
+}
+
+// Invoice model for invoice and receipt management
+model Invoice {
+  id              String        @id @default(cuid())
+  invoice_number  String        @unique
+  customer_name   String
+  customer_email  String
+  customer_phone  String?
+  issue_date      DateTime      @default(now())
+  due_date        DateTime
+  status          InvoiceStatus @default(draft)
+  type            InvoiceType   @default(invoice)
+  subtotal        Float
+  tax             Float         @default(0)
+  discount        Float         @default(0)
+  total           Float
+  notes           String?
+  payment_method  String?
+  payment_date    DateTime?
+  
+  // Relations
+  items           InvoiceItem[]
+  
+  // Metadata
+  created_at      DateTime      @default(now())
+  updated_at      DateTime      @updatedAt
+  created_by      String?
+  
+  // Index for performance
+  @@index([invoice_number])
+  @@index([customer_name])
+  @@index([customer_email])
+  @@index([status])
+  @@index([type])
+  @@index([issue_date])
+  @@index([due_date])
+  @@map("invoices")
+}
+
+// Invoice Item model for invoice line items
+model InvoiceItem {
+  id            String    @id @default(cuid())
+  invoice_id    String
+  product_name  String
+  quantity      Int
+  unit_price    Float
+  total         Float
+  
+  // Relations
+  invoice       Invoice   @relation(fields: [invoice_id], references: [id], onDelete: Cascade)
+  
+  // Metadata
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  
+  // Index for performance
+  @@index([invoice_id])
+  @@index([product_name])
+  @@map("invoice_items")
+}
+
+// Enum for invoice status
+enum InvoiceStatus {
+  draft
+  sent
+  paid
+  overdue
+  cancelled
+}
+
+// Enum for invoice type
+enum InvoiceType {
+  invoice
+  receipt
+}
+
+// Affiliate Endorsement model for campaign management
+model AffiliateEndorsement {
+  id                String    @id @default(cuid())
+  campaign_name     String
+  affiliate_name    String
+  affiliate_type    String
+  start_date        DateTime
+  end_date          DateTime
+  endorse_fee       Float     @default(0)
+  target_sales      Float     @default(0)
+  actual_sales      Float     @default(0)
+  total_commission  Float     @default(0)
+  payment_method    String?
+  platform          String[]  // Array of platforms
+  content_type      String?
+  followers         Int?      @default(0)
+  engagement        Float?    @default(0)
+  reference         String?
+  notes             String?
+  status            String    @default("active")
+  roi               Float?
+  created_by        String?
+  
+  // Relations
+  product_sales     AffiliateProductSale[]
+  
+  // Metadata
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
+  
+  // Index for performance
+  @@index([affiliate_name])
+  @@index([campaign_name])
+  @@index([start_date])
+  @@index([end_date])
+  @@index([status])
+  @@index([affiliate_type])
+  @@index([endorse_fee])
+  @@index([actual_sales])
+  @@index([roi])
+  @@index([created_at])
+  @@map("affiliate_endorsements")
+}
+
+// Affiliate Product Sales model for detailed product tracking
+model AffiliateProductSale {
+  id              String    @id @default(cuid())
+  endorsement_id  String
+  product_name    String
+  quantity        Int       @default(0)
+  unit_price      Float     @default(0)
+  total_sales     Float     @default(0)
+  commission      Float     @default(0)
+  
+  // Relations
+  endorsement     AffiliateEndorsement @relation(fields: [endorsement_id], references: [id], onDelete: Cascade)
+  
+  // Metadata
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+  
+  // Index for performance
+  @@index([endorsement_id])
+  @@index([product_name])
+  @@index([total_sales])
+  @@index([commission])
+  @@unique([endorsement_id, product_name]) // Prevent duplicate products per endorsement
+  @@map("affiliate_product_sales")
+}
+
+// Activity Logs model for system activity tracking
+model ActivityLogs {
+  id              String    @id @default(cuid())
+  type            String    // Type of activity (import, sales, system, etc.)
+  title           String    // Title/summary of the activity
+  description     String    // Detailed description
+  status          String?   @default("info") // success, error, warning, info
+  metadata        Json?     // Additional metadata in JSON format
+  user_id         String?   // User who performed the activity
+  related_id      String?   // Related entity ID
+  related_type    String?   // Related entity type
+  
+  // Metadata
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+  
+  // Index for performance
+  @@index([type])
+  @@index([created_at])
+  @@index([status])
+  @@index([user_id])
+  @@index([related_id])
+  @@index([related_type])
+  @@map("activity_logs")
+}
+
+// Duplicate Check Logs model for import duplicate tracking
+model DuplicateCheckLogs {
+  id            String    @id @default(cuid())
+  file_name     String
+  file_size     BigInt?
+  file_hash     String?   // SHA-256 hash for exact duplicate detection
+  import_type   String
+  check_result  Json?     // JSON result of duplicate analysis
+  
+  // Metadata
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  
+  // Index for performance
+  @@index([file_hash])
+  @@index([import_type])
+  @@index([created_at])
+  @@map("duplicate_check_logs")
+}
+
+// Import Metadata model for detailed import analysis
+model ImportMetadata {
+  id                String        @id @default(cuid())
+  import_history_id String
+  metadata_type     String        // 'date_range', 'file_info', 'processing_info'
+  metadata          Json          // Flexible metadata storage
+  
+  // Relations
+  import_history    ImportHistory @relation(fields: [import_history_id], references: [id], onDelete: Cascade)
+  
+  // Metadata
+  created_at        DateTime      @default(now())
+  
+  // Index for performance
+  @@index([import_history_id])
+  @@index([metadata_type])
+  @@map("import_metadata")
+}
+
+// Tailor model for managing tailors/sewers
+model Tailor {
+  id              String    @id @default(cuid())
+  code            String    @unique
+  name            String
+  contact_person  String
+  phone           String
+  email           String
+  address         String
+  specialization  String    // e.g., "Blouses, Dress, Set"
+  rating          Float     @default(0) // Rating out of 5
+  status          TailorStatus @default(active)
+  payment_terms   String    @default("COD") // Payment terms
+  
+  // Relations
+  productions     TailorProduction[]
+  
+  // Metadata
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+  
+  // Index for performance
+  @@index([code])
+  @@index([name])
+  @@index([status])
+  @@index([specialization])
+  @@index([rating])
+  @@map("tailors")
+}
+
+// Tailor Production model for tracking production records
+model TailorProduction {
+  id                         String    @id @default(cuid())
+  tailor_id                  String
+  product_name               String
+  color                      String
+  size                       String
+  finished_stock             Int       @default(0)
+  meters_needed              Float     @default(0)
+  cost_per_piece             Float     @default(0) 
+  defective_stock            Int?      @default(0)
+  additional_costs           Float?    @default(0)
+  additional_cost_description String?
+  delivery_date              DateTime?
+  notes                      String?
+  status                     TailorProductionStatus @default(completed)
+  
+  // Relations
+  tailor                     Tailor    @relation(fields: [tailor_id], references: [id], onDelete: Cascade)
+  
+  // Metadata
+  created_at                 DateTime  @default(now())
+  updated_at                 DateTime  @updatedAt
+  
+  // Index for performance
+  @@index([tailor_id])
+  @@index([product_name])
+  @@index([status])
+  @@index([delivery_date])
+  @@index([created_at])
+  @@map("tailor_productions")
+}
+
+// Enum for Tailor status
+enum TailorStatus {
+  active
+  inactive
+  pending
+}
+
+// Enum for Tailor Production status
+enum TailorProductionStatus {
+  completed
+  in_progress
+  pending
+}
+
+// Product HPP model for TikTok Commission Calculator
+model ProductHPP {
+  id           String    @id @default(cuid())
+  nama_produk  String
+  size         String?   // Size variant (S, M, L, XL, dll)
+  hpp          Float
+  kategori     String?
+  deskripsi    String?
+  
+  // Metadata
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+  
+  // Index for performance
+  @@index([nama_produk])
+  @@index([size])
+  @@index([kategori])
+  @@index([hpp])
+  @@index([created_at])
+  @@index([nama_produk, size])
+  @@unique([nama_produk, size]) // Allow same product with different sizes
+  @@map("product_hpp")
+}

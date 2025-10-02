@@ -1,0 +1,380 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "import": "Import",
+    "refresh": "Refresh",
+    "view": "View",
+    "close": "Close",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "sales": "Sales",
+    "products": "Products",
+    "customers": "Customers",
+    "reports": "Reports",
+    "analytics": "Analytics",
+    "advertising": "Advertising",
+    "forecasting": "Forecasting",
+    "cashflow": "Cash Flow",
+    "inventory": "Inventory",
+    "settings": "Settings",
+    "users": "Users"
+  },
+  "dashboard": {
+    "title": "D'Busana Dashboard",
+    "welcome": "Welcome to D'Busana fashion business dashboard",
+    "overview": "Business Overview",
+    "kpi": {
+      "total_revenue": "Total Revenue",
+      "total_orders": "Total Orders",
+      "total_products": "Total Products",
+      "total_customers": "Total Customers",
+      "growth_rate": "Growth Rate",
+      "profit_margin": "Profit Margin",
+      "conversion_rate": "Conversion Rate",
+      "avg_order_value": "Average Order Value"
+    },
+    "charts": {
+      "revenue_trend": "Revenue Trend",
+      "sales_performance": "Sales Performance",
+      "marketplace_breakdown": "Marketplace Breakdown",
+      "product_performance": "Product Performance"
+    },
+    "recent_activities": "Recent Activities",
+    "quick_actions": "Quick Actions"
+  },
+  "sales": {
+    "title": "Sales Management",
+    "overview": "Sales Overview",
+    "transactions": "Transactions",
+    "revenue": "Revenue",
+    "orders": "Orders",
+    "customers": "Customers",
+    "marketplace": {
+      "shopee": "Shopee",
+      "tokopedia": "Tokopedia",
+      "lazada": "Lazada",
+      "tiktok_shop": "TikTok Shop",
+      "direct": "Direct Sales"
+    },
+    "status": {
+      "pending": "Pending",
+      "processing": "Processing",
+      "shipped": "Shipped",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled",
+      "returned": "Returned"
+    },
+    "filters": {
+      "date_range": "Date Range",
+      "marketplace": "Marketplace",
+      "status": "Status",
+      "product": "Product",
+      "customer": "Customer"
+    }
+  },
+  "products": {
+    "title": "Product Management",
+    "overview": "Product Overview",
+    "inventory": "Inventory",
+    "categories": "Categories",
+    "brands": "Brands",
+    "stock": "Stock",
+    "price": "Price",
+    "cost": "Cost",
+    "profit": "Profit",
+    "performance": "Product Performance",
+    "fields": {
+      "name": "Product Name",
+      "sku": "SKU",
+      "category": "Category",
+      "brand": "Brand",
+      "price": "Price",
+      "cost": "COGS",
+      "stock": "Stock",
+      "description": "Description",
+      "images": "Images"
+    }
+  },
+  "customers": {
+    "title": "Customer Management",
+    "overview": "Customer Overview",
+    "segments": "Customer Segments",
+    "lifetime_value": "Lifetime Value",
+    "acquisition": "Customer Acquisition",
+    "retention": "Customer Retention",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Address",
+      "city": "City",
+      "province": "Province",
+      "total_orders": "Total Orders",
+      "total_spent": "Total Spent",
+      "last_order": "Last Order"
+    }
+  },
+  "analytics": {
+    "title": "Business Analytics",
+    "strategic": "Strategic Analytics",
+    "performance": "Performance Analysis",
+    "trends": "Business Trends",
+    "insights": "Business Insights",
+    "recommendations": "Recommendations",
+    "forecasting": "Forecasting",
+    "roi": "Return on Investment",
+    "conversion": {
+      "title": "Conversion Rates by Channel",
+      "insight": "{{channel}} has the highest conversion rate ({{rate}}%), showing great potential for expanding investment in this channel.",
+      "single_channel": "Currently operating only on {{channel}} with conversion rate {{rate}}%. Consider expanding to other marketplaces for risk diversification.",
+      "no_data": "No conversion rates data available",
+      "no_data_description": "Data will appear after sales transactions"
+    },
+    "strategic": {
+      "title": "Strategic Business Analytics",
+      "description": "Comprehensive data analysis and strategic insights for D'Busana business decision making",
+      "business_health_score": "Business Health Score",
+      "analysis_period": "Analysis Period",
+      "months_3": "3 Months",
+      "months_6": "6 Months",
+      "year_1": "1 Year",
+      "export_report": "Export Report",
+      "analytics_view": "Analytics View",
+      "strategic_analytics": "Strategic Analytics",
+      "ai_powered_insights": "AI-Powered Insights",
+      "method_comparison": "Method Comparison",
+      "analyzing": "Analyzing...",
+      "refresh_ai": "Refresh AI",
+      "last_refresh": "Last",
+      "loading_text": "Loading Strategic Analytics...",
+      "loading_description": "Analyzing comprehensive business data",
+      "failed_title": "Failed to Load Strategic Data",
+      "failed_description": "Unable to generate strategic business analytics",
+      "retry_loading": "Retry Loading",
+      "kpi": {
+        "total_revenue": "Total Revenue",
+        "net_profit": "Net Profit",
+        "marketing_roi": "Marketing ROI",
+        "customer_ltv": "Customer LTV",
+        "growth": "growth",
+        "margin": "margin",
+        "excellent_performance": "Excellent performance",
+        "vs_cac": "vs {{cac}} CAC"
+      },
+      "tabs": {
+        "business_overview": "Business Overview",
+        "strategic_insights": "Strategic Insights",
+        "recommendations": "Recommendations",
+        "performance_analysis": "Performance Analysis",
+        "strategic_forecasting": "Strategic Forecasting"
+      },
+      "charts": {
+        "business_performance_matrix": "Business Performance Matrix",
+        "revenue_distribution": "Revenue Distribution by Channel",
+        "revenue_growth_trend": "Revenue Growth Trend & Seasonal Patterns",
+        "performance_score": "Performance Score",
+        "revenue_share": "Revenue Share",
+        "revenue": "Revenue",
+        "month": "Month"
+      },
+      "metrics": {
+        "operational_excellence": "Operational Excellence",
+        "marketing_performance": "Marketing Performance",
+        "risk_assessment": "Risk Assessment",
+        "inventory_turnover": "Inventory Turnover",
+        "order_fulfillment": "Order Fulfillment",
+        "cash_flow_health": "Cash Flow Health",
+        "campaign_effectiveness": "Campaign Effectiveness",
+        "best_conversion_rate": "Best Conversion Rate",
+        "ltv_cac_ratio": "LTV/CAC Ratio",
+        "cash_flow_risk": "Cash Flow Risk",
+        "inventory_risk": "Inventory Risk",
+        "market_risk": "Market Risk",
+        "operational_risk": "Operational Risk",
+        "overall_risk_level": "Overall Risk Level"
+      },
+      "insights": {
+        "title": "Strategic Business Insights",
+        "description": "Data-driven insights for strategic decision making",
+        "filter_placeholder": "Filter by category",
+        "all_categories": "All Categories",
+        "growth_opportunities": "Growth Opportunities",
+        "risk_management": "Risk Management",
+        "optimization": "Optimization",
+        "growth_strategy": "Growth Strategy",
+        "priority": "PRIORITY",
+        "impact_score": "Impact Score",
+        "timeline": "Timeline",
+        "implementation": "Implementation",
+        "expected_outcome": "Expected Outcome",
+        "action_items": "Action Items",
+        "kpi_impact": "KPI Impact",
+        "effort": "effort"
+      },
+      "recommendations": {
+        "title": "Strategic Business Recommendations",
+        "description": "Investment recommendations prioritized by business impact",
+        "business_impact": "Business Impact",
+        "investment_required": "Investment Required",
+        "payback_period": "Payback Period",
+        "risk_level": "Risk Level",
+        "implementation_steps": "Implementation Steps",
+        "success_metrics": "Success Metrics",
+        "no_steps": "No implementation steps available",
+        "no_metrics": "No success metrics defined",
+        "no_recommendations_title": "No Business Recommendations Available",
+        "no_recommendations_description": "Strategic recommendations will appear here once sufficient data is analyzed.",
+        "risk": {
+          "low": "LOW",
+          "medium": "MEDIUM",
+          "high": "HIGH"
+        }
+      },
+      "performance": {
+        "customer_segments": "Customer Segments Performance",
+        "segment_size": "Segment Size",
+        "lifetime_value": "Lifetime Value",
+        "acquisition_cost": "Acquisition Cost",
+        "cost_structure": "Cost Structure",
+        "marketplace_conversion": "Marketplace Conversion",
+        "conversion_rate": "Conversion Rate",
+        "orders": "orders"
+      },
+      "toast": {
+        "success_loaded": "Strategic Business Analytics loaded",
+        "success_description": "{{insights}} AI-powered insights and {{recommendations}} recommendations based on real data analysis",
+        "ai_success": "AI Strategic Analytics Loaded",
+        "ai_description": "{{count}} intelligent insights generated from real business data",
+        "fallback_info": "Using fallback insights - strategic analysis ready",
+        "error_engine": "Analytics engine error - showing fallback insights",
+        "unavailable": "Strategic Analytics Unavailable",
+        "unavailable_description": "Unable to analyze data - database unavailable",
+        "comparison_success": "Comparison Analytics Generated",
+        "comparison_description": "Template vs AI vs Hybrid insights comparison ready"
+      },
+      "categories": {
+        "opportunity": "Opportunity",
+        "risk": "Risk",
+        "optimization": "Optimization",
+        "growth": "Growth"
+      }
+    }
+  },
+  "advertising": {
+    "title": "Advertising Management",
+    "campaigns": "Campaigns",
+    "performance": "Ad Performance",
+    "spend": "Ad Spend",
+    "roi": "Ad ROI",
+    "impressions": "Impressions",
+    "clicks": "Clicks",
+    "conversions": "Conversions",
+    "cost_per_click": "Cost per Click",
+    "cost_per_acquisition": "Cost per Acquisition"
+  },
+  "reports": {
+    "title": "Reports",
+    "financial": "Financial Report",
+    "sales": "Sales Report",
+    "inventory": "Inventory Report",
+    "customer": "Customer Report",
+    "marketing": "Marketing Report",
+    "operational": "Operational Report"
+  },
+  "settings": {
+    "title": "Settings",
+    "general": "General",
+    "account": "Account",
+    "security": "Security",
+    "notifications": "Notifications",
+    "language": "Language",
+    "theme": "Theme",
+    "currency": "Currency",
+    "timezone": "Timezone"
+  },
+  "import": {
+    "title": "Import Data",
+    "sales_data": "Sales Data",
+    "product_data": "Product Data",
+    "customer_data": "Customer Data",
+    "advertising_data": "Advertising Data",
+    "template": "Template",
+    "upload": "Upload File",
+    "processing": "Processing...",
+    "success": "Import successful",
+    "error": "Import failed",
+    "validation": {
+      "required_fields": "Required fields cannot be empty",
+      "invalid_format": "Invalid format",
+      "duplicate_data": "Duplicate data detected"
+    }
+  },
+  "errors": {
+    "network": "Network connection problem",
+    "server": "Server error",
+    "not_found": "Data not found",
+    "unauthorized": "Unauthorized",
+    "validation": "Validation failed",
+    "unknown": "Unknown error"
+  },
+  "success": {
+    "save": "Data saved successfully",
+    "update": "Data updated successfully",
+    "delete": "Data deleted successfully",
+    "import": "Data imported successfully",
+    "export": "Data exported successfully"
+  },
+  "date": {
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "this_week": "This week",
+    "last_week": "Last week",
+    "this_month": "This month",
+    "last_month": "Last month",
+    "this_year": "This year",
+    "last_year": "Last year",
+    "custom": "Custom",
+    "months": {
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June",
+      "july": "July",
+      "august": "August",
+      "september": "September",
+      "october": "October",
+      "november": "November",
+      "december": "December"
+    },
+    "days": {
+      "sunday": "Sunday",
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday"
+    }
+  }
+}
